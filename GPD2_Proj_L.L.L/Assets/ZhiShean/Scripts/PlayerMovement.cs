@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    public GameObject shootingBullet;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
+
+        shootingBullet.SetActive(false);
     }
 
     // Update is called once per frame
