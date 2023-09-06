@@ -50,5 +50,7 @@ public class PlayerShooter : MonoBehaviour
     {
         var projectileObj = Instantiate (projectile, firePoint.position, Quaternion.identity) as GameObject;
         projectileObj.GetComponent<Rigidbody>().velocity = (destination - firepoint.position).normalized * projectileSpeed;
+
+        Destroy(projectileObj, 5f);
     }
 }

@@ -16,7 +16,7 @@ public class WaterProjectile : MonoBehaviour
 
             var impact = Instantiate(impactEffect, collision.contacts[0].point, Quaternion.identity) as GameObject;
 
-            Destroy(impact, 2f);
+            Destroy(impact, 0.5f);
 
             Destroy(gameObject);
         }
