@@ -13,15 +13,33 @@ public class PlayerShooter : MonoBehaviour
     private Vector3 destination;
     private float timeToFire;
 
+    public int maxAmmo;
+    private int currentAmmo;
+    public float reloadTime;
+    private bool isReloading;
+
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentAmmo = maxAmmo;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(isReloading)
+        {
+            return;
+        }
+
+        if(currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
+
         if(Input.GetButton("Fire1") && Time.time >= timeToFire)
         {
             timeToFire = Time.time + 1 / fireRate;
@@ -29,8 +47,27 @@ public class PlayerShooter : MonoBehaviour
         }
     }
 
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        Debug.Log("Reloading");
+
+        animator.SetBool("Reloading", true);
+
+        yield return new WaitForSeconds(reloadTime - 0.5f);
+
+        animator.SetBool("Reloading", false);
+
+        yield return new WaitForSeconds(0.5f);
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
+    }
+
     void ShootProjectile()
     {
+        currentAmmo--;
+
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 

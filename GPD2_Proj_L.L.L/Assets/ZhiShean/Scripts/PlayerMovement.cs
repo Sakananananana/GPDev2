@@ -40,8 +40,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
-
-        shootingBullet.SetActive(false);
     }
 
     // Update is called once per frame
