@@ -34,7 +34,7 @@ public class PlayerShooter : MonoBehaviour
             return;
         }
 
-        if(currentAmmo <= 0)
+        if (currentAmmo <= 0 || (Input.GetKeyDown(KeyCode.R) && currentAmmo != maxAmmo))
         {
             StartCoroutine(Reload());
             return;
