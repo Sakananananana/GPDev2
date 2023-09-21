@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerShooter : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PlayerShooter : MonoBehaviour
     public float reloadTime;
     private bool isReloading;
 
+    public TMP_Text ammoText;
+
     public Animator animator;
 
     // Start is called before the first frame update
@@ -29,6 +32,8 @@ public class PlayerShooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ammoText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
+
         if(isReloading)
         {
             return;

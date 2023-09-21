@@ -130,8 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d8d940964143047b52603d5ced0fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 800
-  sensY: 1000
+  sensX: 600
+  sensY: 800
   orientation: {fileID: 8521993976697649813}
 --- !u!114 &8521993976293163637
 MonoBehaviour:
@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 8521993976611628149}
   - component: {fileID: 8521993976611628147}
   - component: {fileID: 8521993976611628144}
+  - component: {fileID: 4692983840571756896}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -174,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 8521993976611628148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8521993976293163639}
@@ -213,11 +214,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   groundDrag: 5
-  jumpForce: 5
+  jumpForce: 6
   jumpCooldown: 0.25
-  airMultiplier: 0.4
+  airMultiplier: 0.5
   jumpKey: 32
-  playerHeight: 2
+  playerHeight: 1.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
@@ -242,7 +243,44 @@ MonoBehaviour:
   fireRate: 2.5
   maxAmmo: 5
   reloadTime: 2
+  ammoText: {fileID: 0}
   animator: {fileID: 8521993976949562444}
+--- !u!114 &4692983840571756896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521993976611628148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f33fad6b16d15549a2346124d391570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 10
+  HPText: {fileID: 0}
+  damage: 1
+  infoFound: 0
+  info1Found: 0
+  info2Found: 0
+  info3Found: 0
+  spawnDestroyed: 0
+  isSpawnDestroy: 0
+  isEnded: 0
+  hasLighter: 0
+  lighterImage: {fileID: 0}
+  damageImage: {fileID: 0}
+  notificationText: {fileID: 0}
+  noteObjective: {fileID: 0}
+  destroyObjective: {fileID: 0}
+  endObjective: {fileID: 0}
+  destroyObjectiveToggle: {fileID: 0}
+  noteObjectiveToggle: {fileID: 0}
+  endObjectiveToggle: {fileID: 0}
+  note1Panel: {fileID: 0}
+  note2Panel: {fileID: 0}
+  note3Panel: {fileID: 0}
 --- !u!1 &8521993976697649812
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +309,7 @@ Transform:
   m_GameObject: {fileID: 8521993976697649812}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8521993976611628146}

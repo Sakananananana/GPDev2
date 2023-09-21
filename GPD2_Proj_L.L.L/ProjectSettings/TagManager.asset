@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - Note 1
+  - Note 2
+  - Note 3
+  - Mask
+  - Lighter
+  - EnemySpawn
+  - EnemyAttack
+  - End
   layers:
   - Default
   - TransparentFX
