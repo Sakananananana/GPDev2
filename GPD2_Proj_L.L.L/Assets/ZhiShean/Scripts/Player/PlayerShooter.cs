@@ -23,6 +23,15 @@ public class PlayerShooter : MonoBehaviour
 
     public Animator animator;
 
+    public AudioSource SFX;
+
+    public AudioClip[] gunSFX;
+
+    public GameObject pauseMenu;
+    public GameObject note1Panel;
+    public GameObject note2Panel;
+    public GameObject note3Panel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,28 +41,33 @@ public class PlayerShooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ammoText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
-
-        if(isReloading)
+        if (!pauseMenu.activeSelf && !note1Panel.activeSelf && !note2Panel.activeSelf && !note3Panel.activeSelf)
         {
-            return;
-        }
+            ammoText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
 
-        if (currentAmmo <= 0 || (Input.GetKeyDown(KeyCode.R) && currentAmmo != maxAmmo))
-        {
-            StartCoroutine(Reload());
-            return;
-        }
+            if (isReloading)
+            {
+                return;
+            }
 
-        if(Input.GetButton("Fire1") && Time.time >= timeToFire)
-        {
-            timeToFire = Time.time + 1 / fireRate;
-            ShootProjectile();
+            if (currentAmmo <= 0 || (Input.GetKeyDown(KeyCode.R) && currentAmmo != maxAmmo))
+            {
+                StartCoroutine(Reload());
+                return;
+            }
+
+            if (Input.GetButton("Fire1") && Time.time >= timeToFire)
+            {
+                timeToFire = Time.time + 1 / fireRate;
+                ShootProjectile();
+            }
         }
     }
 
     IEnumerator Reload()
     {
+        SFX.PlayOneShot(gunSFX[1]);
+
         isReloading = true;
         Debug.Log("Reloading");
 
@@ -71,6 +85,8 @@ public class PlayerShooter : MonoBehaviour
 
     void ShootProjectile()
     {
+        SFX.PlayOneShot(gunSFX[0]);
+
         currentAmmo--;
 
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));

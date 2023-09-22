@@ -6,10 +6,14 @@ public class TriggerDoorController : MonoBehaviour
 {
     public Animator doorAnimator;
 
+    public AudioSource SFX;
+    public AudioClip[] DoorSounds;
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
+            SFX.PlayOneShot(DoorSounds[0]);
             doorAnimator.SetBool("DoorOpen", true);
         }
     }
@@ -18,6 +22,7 @@ public class TriggerDoorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            SFX.PlayOneShot(DoorSounds[1]);
             doorAnimator.SetBool("DoorOpen", false);
         }
     }

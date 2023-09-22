@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
 
     public Transform orientation;
 
@@ -32,6 +32,10 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
 
     public GameObject shootingBullet;
+
+    public AudioSource SFX;
+
+    public GameObject pauseMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -45,25 +49,41 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
-        MyInput();
-        SpeedControl();
-
-        if (grounded)
+        if (!pauseMenu.activeSelf)
         {
-            rb.drag = groundDrag;
-        }
-        else
-        {
-            rb.drag = 0;
+            //ground check
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
+            MyInput();
+            SpeedControl();
+            MovementSound();
+
+            if (grounded)
+            {
+                rb.drag = groundDrag;
+            }
+            else
+            {
+                rb.drag = 0;
+            }
         }
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
+    }
+
+    private void MovementSound()
+    {
+        if(grounded && (horizontalInput != 0f || verticalInput != 0f))
+        {
+            SFX.mute = false;
+        }
+        else
+        {
+            SFX.mute = true;
+        }
     }
 
     private void MyInput()
@@ -76,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
 
-            Invoke(nameof(ResetJump), jumpCooldown);
+            StartCoroutine(ResetJump());
 
             readyToJump = false;
         }
@@ -95,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
         else if(!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-
         }
     }
 
@@ -119,8 +138,10 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
-    private void ResetJump()
+    IEnumerator ResetJump()
     {
+        yield return new WaitForSeconds(jumpCooldown);
+
         readyToJump = true;
     }
 }

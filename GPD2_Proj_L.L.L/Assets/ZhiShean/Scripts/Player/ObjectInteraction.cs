@@ -12,10 +12,15 @@ public class ObjectInteraction : MonoBehaviour
 
     public int damage;
 
+    public bool isInfoFound;
     public int infoFound;
     public bool info1Found;
     public bool info2Found;
     public bool info3Found;
+
+    public bool infoObjectiveSound;
+    public bool destroyObjectiveSound;
+    public bool endObjectiveSound;
 
     public int spawnDestroyed;
     public bool isSpawnDestroy;
@@ -40,6 +45,9 @@ public class ObjectInteraction : MonoBehaviour
     public GameObject note2Panel;
     public GameObject note3Panel;
 
+    public AudioSource SFX;
+    public AudioClip[] characterSFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,10 +55,15 @@ public class ObjectInteraction : MonoBehaviour
 
         damage = 1;
 
+        isInfoFound = false;
         infoFound = 0;
         info1Found = false;
         info2Found = false;
         info3Found = false;
+
+        infoObjectiveSound = false;
+        destroyObjectiveSound = false;
+        endObjectiveSound = false;
 
         spawnDestroyed = 0;
         isSpawnDestroy = false;
@@ -83,32 +96,50 @@ public class ObjectInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HPText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
+            HPText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
 
-        noteObjective.text = "Informations found (" + infoFound.ToString() + "/3)";
-        destroyObjective.text = "Enemy Spawn Destroyed (" + spawnDestroyed.ToString() + "/5)";
-        endObjective.text = "Reach Spawn";
+            noteObjective.text = "Informations found (" + infoFound.ToString() + "/3)";
+            destroyObjective.text = "Enemy Spawn Destroyed (" + spawnDestroyed.ToString() + "/5)";
+            endObjective.text = "Reach Spawn";
 
-        DisableNotePanel();
-        ObjectivesCompleted();
+            DisableNotePanel();
+            ObjectivesCompleted();
     }
 
     void ObjectivesCompleted()
     {
         if (infoFound >= 3)
         {
+            if(!infoObjectiveSound)
+            {
+                SFX.PlayOneShot(characterSFX[7]);
+                infoObjectiveSound = true;
+            }
+            
             noteObjective.alpha = 0.5f;
             noteObjectiveToggle.isOn = true;
         }
 
         if (spawnDestroyed >= 5)
         {
+            if(!destroyObjective)
+            {
+                SFX.PlayOneShot(characterSFX[7]);
+                destroyObjectiveSound = true;
+            }
+
             destroyObjective.alpha = 0.5f;
             destroyObjectiveToggle.isOn = true;
         }
 
         if(isEnded)
         {
+            if(!endObjectiveSound)
+            {
+                SFX.PlayOneShot(characterSFX[7]);
+                endObjectiveSound = true;
+            }
+            
             endObjective.alpha = 0.5f;
             endObjectiveToggle.isOn = true;
         }
@@ -118,8 +149,11 @@ public class ObjectInteraction : MonoBehaviour
     {
         if (note1Panel.activeSelf)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
+                Time.timeScale = 1f;
+                SFX.PlayOneShot(characterSFX[1]);
+                isInfoFound = false;
                 note1Panel.SetActive(false);
                 StartCoroutine(Note1Obtained());
             }
@@ -127,8 +161,11 @@ public class ObjectInteraction : MonoBehaviour
 
         if (note2Panel.activeSelf)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
+                Time.timeScale = 1f;
+                SFX.PlayOneShot(characterSFX[1]);
+                isInfoFound = false;
                 note2Panel.SetActive(false);
                 StartCoroutine(Note2Obtained());
             }
@@ -136,8 +173,11 @@ public class ObjectInteraction : MonoBehaviour
 
         if (note3Panel.activeSelf)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
+                Time.timeScale = 1f;
+                SFX.PlayOneShot(characterSFX[1]);
+                isInfoFound = false;
                 note3Panel.SetActive(false);
                 StartCoroutine(Note3Obtained());
             }
@@ -148,6 +188,8 @@ public class ObjectInteraction : MonoBehaviour
     {
         if(other.CompareTag("EnemyAttack"))
         {
+            SFX.PlayOneShot(characterSFX[4]);
+
             currentHealth--;
         }
 
@@ -203,9 +245,16 @@ public class ObjectInteraction : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
+                Time.timeScale = 0f;
                 notificationText.enabled = true;
                 notificationText.text = "Press 'Esc' to close the Note 1";
                 note1Panel.SetActive(true);
+
+                if(!isInfoFound)
+                {
+                    SFX.PlayOneShot(characterSFX[1]);
+                    isInfoFound = true;
+                }
 
                 if (!info1Found)
                 {
@@ -219,9 +268,16 @@ public class ObjectInteraction : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
+                Time.timeScale = 0f;
                 notificationText.enabled = true;
                 notificationText.text = "Press 'Esc' to close the Note 2";
                 note2Panel.SetActive(true);
+
+                if (!isInfoFound)
+                {
+                    SFX.PlayOneShot(characterSFX[1]);
+                    isInfoFound = true;
+                }
 
                 if (!info2Found)
                 {
@@ -235,11 +291,18 @@ public class ObjectInteraction : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
+                Time.timeScale = 0f;
                 notificationText.enabled = true;
                 notificationText.text = "Press 'Esc' to close the Note 3";
                 note3Panel.SetActive(true);
                 damageImage.enabled = true;
                 damage = 2;
+
+                if (!isInfoFound)
+                {
+                    SFX.PlayOneShot(characterSFX[1]);
+                    isInfoFound = true;
+                }
 
                 if (!info3Found)
                 {
@@ -255,6 +318,7 @@ public class ObjectInteraction : MonoBehaviour
             {
                 if(currentHealth != maxHealth)
                 {
+                    SFX.PlayOneShot(characterSFX[3]);
                     currentHealth = maxHealth;
                     other.gameObject.SetActive(false);
                     notificationText.enabled = true;
@@ -272,6 +336,7 @@ public class ObjectInteraction : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
+                SFX.PlayOneShot(characterSFX[0]);
                 lighterImage.enabled = true;
                 hasLighter = true;
                 notificationText.enabled = false;
@@ -286,6 +351,7 @@ public class ObjectInteraction : MonoBehaviour
             {
                 if (!isSpawnDestroy)
                 {
+                    SFX.PlayOneShot(characterSFX[2]);
                     spawnDestroyed++;
                     notificationText.enabled = true;
                     StartCoroutine(EnemySpawnDestroy());
@@ -303,7 +369,12 @@ public class ObjectInteraction : MonoBehaviour
         {
             if (infoFound >= 3 && spawnDestroyed >= 5)
             {
-                isEnded = true;
+                if(!isEnded)
+                {
+                    SFX.PlayOneShot(characterSFX[6]);
+                    isEnded = true;
+                }
+
                 notificationText.enabled = true;
                 StartCoroutine(GameEnded());
             }

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/ZhiShean/Scenes/Main Menu.unity
+    guid: 42ad67a7773ad5c4b8747637f5db5dde
+  - enabled: 1
+    path: Assets/ZhiShean/Scenes/Gameplay.unity
+    guid: d2c3530ed8a8a4b47bb8af0cb1f36bfd
   m_configObjects: {}

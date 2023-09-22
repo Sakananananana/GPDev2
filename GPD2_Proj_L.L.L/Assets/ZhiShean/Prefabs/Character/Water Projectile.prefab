@@ -4947,3 +4947,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactEffect: {fileID: 4808588865675170535, guid: c85f4952e392c55419bd12a1b8d13566, type: 3}
+  SFX: {fileID: 0}
+  splashSFX: {fileID: 8300000, guid: 7583fdeb87ceeb444953739e744434a5, type: 3}
