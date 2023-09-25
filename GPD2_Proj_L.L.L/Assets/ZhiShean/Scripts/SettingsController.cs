@@ -50,7 +50,7 @@ public class SettingsController : MonoBehaviour
 
         VertiText.text = VertiValue.ToString("0.00");
         VertiValue = VertiSlider.value;
-        PlayerPrefs.SetFloat("VertiSensitivity", BGMValue);
+        PlayerPrefs.SetFloat("VertiSensitivity", VertiValue);
         PlayerPrefs.Save();
 
 
