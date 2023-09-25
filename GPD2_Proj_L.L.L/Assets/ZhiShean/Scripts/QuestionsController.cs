@@ -52,10 +52,10 @@ public class QuestionsController : MonoBehaviour
     }
     public void StartingQuestion()
     {
-
+        Application.OpenURL("https://forms.gle/fJw3xBfgrro4uWjs9");
     }
     public void EndingQuestion()
     {
-
+        Application.OpenURL("https://forms.gle/AqXfnTxKau4Dkbuv7");
     }
 }
