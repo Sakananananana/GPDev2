@@ -23,6 +23,9 @@ public class PauseMenuController : MonoBehaviour
     public int noteCount;
     public TMP_Text noteNum;
 
+    public GameObject startingPanel;
+    public GameObject endingPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +58,7 @@ public class PauseMenuController : MonoBehaviour
             }
             else
             {
-                if (!inGameNote1.activeSelf && !inGameNote2.activeSelf && !inGameNote3.activeSelf)
+                if (!inGameNote1.activeSelf && !inGameNote2.activeSelf && !inGameNote3.activeSelf && !startingPanel.activeSelf && !endingPanel.activeSelf)
                 {
                     PauseMenuPanel.SetActive(true);
                     PauseText.SetActive(true);

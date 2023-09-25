@@ -32,16 +32,23 @@ public class PlayerShooter : MonoBehaviour
     public GameObject note2Panel;
     public GameObject note3Panel;
 
+    public GameObject startingPanel;
+    public GameObject endingPanel;
+
+    ObjectInteraction oI;
+
     // Start is called before the first frame update
     void Start()
     {
+        oI = GetComponent<ObjectInteraction>();
+
         currentAmmo = maxAmmo;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!pauseMenu.activeSelf && !note1Panel.activeSelf && !note2Panel.activeSelf && !note3Panel.activeSelf)
+        if (!pauseMenu.activeSelf && !note1Panel.activeSelf && !note2Panel.activeSelf && !note3Panel.activeSelf && !startingPanel.activeSelf && !endingPanel.activeSelf && !oI.isDead)
         {
             ammoText.text = currentAmmo.ToString() + " / " + maxAmmo.ToString();
 
@@ -92,7 +99,7 @@ public class PlayerShooter : MonoBehaviour
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             destination = hit.point;
         }

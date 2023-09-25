@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class ObjectInteraction : MonoBehaviour
@@ -26,9 +27,9 @@ public class ObjectInteraction : MonoBehaviour
     public bool isSpawnDestroy;
 
     public bool isEnded;
+    public bool isDead;
 
     public bool hasLighter;
-
     public Image lighterImage;
     public Image damageImage;
 
@@ -47,6 +48,8 @@ public class ObjectInteraction : MonoBehaviour
 
     public AudioSource SFX;
     public AudioClip[] characterSFX;
+
+    public GameObject endingPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +72,7 @@ public class ObjectInteraction : MonoBehaviour
         isSpawnDestroy = false;
 
         isEnded = false;
+        isDead = false;
 
         hasLighter = false;
 
@@ -91,19 +95,44 @@ public class ObjectInteraction : MonoBehaviour
         note1Panel.SetActive(false);
         note2Panel.SetActive(false);
         note3Panel.SetActive(false);
+
+        endingPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-            HPText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
+        HPText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
 
-            noteObjective.text = "Informations found (" + infoFound.ToString() + "/3)";
-            destroyObjective.text = "Enemy Spawn Destroyed (" + spawnDestroyed.ToString() + "/5)";
-            endObjective.text = "Reach Spawn";
+        noteObjective.text = "Informations found (" + infoFound.ToString() + "/3)";
+        destroyObjective.text = "Enemy Spawn Destroyed (" + spawnDestroyed.ToString() + "/5)";
+        endObjective.text = "Reach Spawn";
 
-            DisableNotePanel();
-            ObjectivesCompleted();
+        DisableNotePanel();
+        ObjectivesCompleted();
+
+        PlayerDead();
+    }
+
+    void PlayerDead()
+    {
+        if(currentHealth <= 0)
+        {
+            StartCoroutine(Respawn());
+        }
+    }
+
+    IEnumerator Respawn()
+    {
+        isDead = true;
+        Time.timeScale = 0f;
+        notificationText.enabled = true;
+        notificationText.text = "You are dead!";
+
+        yield return new WaitForSecondsRealtime(2);
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
     }
 
     void ObjectivesCompleted()
@@ -152,6 +181,8 @@ public class ObjectInteraction : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.Escape))
             {
                 Time.timeScale = 1f;
+                PlayerPrefs.SetInt("Note1Obtained", 1);
+                PlayerPrefs.Save();
                 SFX.PlayOneShot(characterSFX[1]);
                 isInfoFound = false;
                 note1Panel.SetActive(false);
@@ -164,6 +195,8 @@ public class ObjectInteraction : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.Escape))
             {
                 Time.timeScale = 1f;
+                PlayerPrefs.SetInt("Note2Obtained", 1);
+                PlayerPrefs.Save();
                 SFX.PlayOneShot(characterSFX[1]);
                 isInfoFound = false;
                 note2Panel.SetActive(false);
@@ -176,6 +209,8 @@ public class ObjectInteraction : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.Escape))
             {
                 Time.timeScale = 1f;
+                PlayerPrefs.SetInt("Note3Obtained", 1);
+                PlayerPrefs.Save();
                 SFX.PlayOneShot(characterSFX[1]);
                 isInfoFound = false;
                 note3Panel.SetActive(false);
@@ -494,6 +529,6 @@ public class ObjectInteraction : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         Time.timeScale = 0f;
-        //show game end panel
+        endingPanel.SetActive(true);
     }
 }

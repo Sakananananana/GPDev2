@@ -36,20 +36,28 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource SFX;
 
     public GameObject pauseMenu;
+    public GameObject startingPanel;
+    public GameObject endingPanel;
+
+    ObjectInteraction oI;
 
     // Start is called before the first frame update
     void Start()
     {
+        oI = GetComponent<ObjectInteraction>();
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         readyToJump = true;
+
+        SFX.mute = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!pauseMenu.activeSelf)
+        if (!pauseMenu.activeSelf && !startingPanel.activeSelf && !endingPanel.activeSelf && !oI.isDead)
         {
             //ground check
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);

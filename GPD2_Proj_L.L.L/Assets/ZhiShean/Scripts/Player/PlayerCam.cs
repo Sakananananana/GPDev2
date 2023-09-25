@@ -9,6 +9,9 @@ public class PlayerCam : MonoBehaviour
     public GameObject note2Panel;
     public GameObject note3Panel;
 
+    public GameObject startingPanel;
+    public GameObject endingPanel;
+
     public float horiValue;
     public float vertiValue;
 
@@ -22,10 +25,13 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    ObjectInteraction oI;
 
     // Start is called before the first frame update
     void Start()
     {
+        oI = GetComponentInParent<ObjectInteraction>();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -33,7 +39,7 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pauseMenu.activeSelf || note1Panel.activeSelf || note2Panel.activeSelf || note3Panel.activeSelf)
+        if (pauseMenu.activeSelf || note1Panel.activeSelf || note2Panel.activeSelf || note3Panel.activeSelf || startingPanel.activeSelf || endingPanel.activeSelf)
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
@@ -43,24 +49,27 @@ public class PlayerCam : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            horiValue = PlayerPrefs.GetFloat("HoriSensitivity", 1);
-            sensX = oriSens * horiValue;
+            if (!oI.isDead)
+            {
+                horiValue = PlayerPrefs.GetFloat("HoriSensitivity", 1);
+                sensX = oriSens * horiValue;
 
-            vertiValue = PlayerPrefs.GetFloat("VertiSensitivity", 1);
-            sensY = oriSens * vertiValue;
+                vertiValue = PlayerPrefs.GetFloat("VertiSensitivity", 1);
+                sensY = oriSens * vertiValue;
 
-            //get mouse input
-            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+                //get mouse input
+                float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+                float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-            yRotation += mouseX;
+                yRotation += mouseX;
 
-            xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+                xRotation -= mouseY;
+                xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-            //rotate cam and orientation
-            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+                //rotate cam and orientation
+                transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+                orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+            }
         }
     }
 }
