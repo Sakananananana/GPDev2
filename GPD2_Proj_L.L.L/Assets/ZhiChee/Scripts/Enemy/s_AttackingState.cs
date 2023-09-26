@@ -22,7 +22,7 @@ public class AttackingState : BaseState
         Vector3 endPoint = curEnmy.transform.position + worldDirection;
         Debug.DrawRay(curEnmy.transform.position, worldDirection, Color.red);
 
-        if (curEnmy._isNearby && Vector3.Distance(curEnmy.transform.position, curEnmy._target.position) > 8)
+        if (curEnmy._isNearby && Vector3.Distance(curEnmy.transform.position, curEnmy._target.position) > 6)
         {
             curEnmy._isAttack = false;
         }

@@ -219,14 +219,24 @@ public class ObjectInteraction : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(other.CompareTag("EnemyAttack"))
+        if(collision.collider.CompareTag("EnemyAttack"))
         {
             SFX.PlayOneShot(characterSFX[4]);
 
             currentHealth--;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if(other.CompareTag("EnemyAttack"))
+        //{
+        //    SFX.PlayOneShot(characterSFX[4]);
+
+        //    currentHealth--;
+        //}
 
         if(other.CompareTag("Note 1"))
         {

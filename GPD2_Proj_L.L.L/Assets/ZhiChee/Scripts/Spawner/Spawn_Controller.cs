@@ -18,7 +18,10 @@ public class Spawn_Controller : MonoBehaviour
     Vector3 _spawnPos;
     float _randRadius;
     float _randAngle;
-    
+
+    [Header("To Play Sound")]
+    public AudioSource _audioSource;
+    public AudioClip _spawnSFX;
     #endregion
 
     void Start()
@@ -66,6 +69,7 @@ public class Spawn_Controller : MonoBehaviour
         _randAngle = Random.Range(0f, 360f);
         _spawnPos = _spawnPosition.position + Quaternion.Euler(0, _randAngle, 0) * Vector3.right * Random.Range(0f, _randRadius);
         _spawnedEnemy = Instantiate(_enemyPrefab, _spawnPos, Quaternion.identity);
+        _audioSource.PlayOneShot(_spawnSFX);
         _spawnedEnemy.SetParent(_mobSpawn);
 
         Debug.Log("Enemy Spawned");

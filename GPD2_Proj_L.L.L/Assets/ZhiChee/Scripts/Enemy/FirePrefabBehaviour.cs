@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class FirePrefabBehaviour : MonoBehaviour
 {
-
+    //Game Object & Transform Reference
     public Transform _target;
     public GameObject _targetedOBJ;
+    public GameObject _impactEffect;
 
+    //Vector 3
     Vector3 _targetPos;
 
+    //Float
     float _speed = 3f;
+
+    //Boolean
+    bool _isCollided;
 
     void Awake()
     {
@@ -26,5 +32,19 @@ public class FirePrefabBehaviour : MonoBehaviour
     void Update()
     {
         transform.Translate(_targetPos * _speed * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != "Bullet" && collision.gameObject.tag != "Enemy" && !_isCollided)
+        {
+            _isCollided = true;
+
+            var impact = Instantiate(_impactEffect, collision.contacts[0].point, Quaternion.identity) as GameObject;
+
+            Destroy(impact, 0.5f);
+
+            Destroy(gameObject);
+        }
     }
 }

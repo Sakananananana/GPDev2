@@ -11,7 +11,7 @@ public class EnemyStats : MonoBehaviour
     //Game Object Reference
     [HideInInspector] public Transform _target;
     [HideInInspector] public Transform _firePort;
-    [HideInInspector] public Transform _firePrefab;
+    public Transform _firePrefab;
     [HideInInspector] public GameObject _targetedOBJ;
 
     //Boolean
@@ -19,6 +19,8 @@ public class EnemyStats : MonoBehaviour
     public bool _isNearby;
 
     //Variable Declaration
+    [HideInInspector] public int _currentHP;
+
     public float _maxSpeed;
     [HideInInspector] public float _accelerationTimeToMax = 3.0f;
     [HideInInspector] public float _steeringForce;
@@ -32,8 +34,10 @@ public class EnemyStats : MonoBehaviour
     [HideInInspector] public Vector3 _targetDir;
     [HideInInspector] public Vector3 _steerDir;
 
-    float _FireCD = 1.25f;
-    bool _isFire;
+    //Fire Mechanics
+    [HideInInspector] public AudioSource _audioSource;
+    [HideInInspector] public AudioClip _attackClip;
+    [HideInInspector] float _FireCD = 2.0f;
     #endregion
 
     //State Mechines
@@ -105,7 +109,8 @@ public class EnemyStats : MonoBehaviour
         else
         {
             Instantiate(_firePrefab, _firePort.position, Quaternion.identity);
-            _FireCD = 1.25f;
+            _audioSource.PlayOneShot(_attackClip);
+            _FireCD = 2.0f;
         }
     }
 }

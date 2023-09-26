@@ -21,7 +21,7 @@ public class SeekingState : BaseState
         Debug.DrawRay(curEnmy.transform.position, worldDirection, Color.blue);
 
 
-        if (curEnmy._isNearby && Vector3.Distance(curEnmy.transform.position, curEnmy._target.position) < 8)
+        if (curEnmy._isNearby && Vector3.Distance(curEnmy.transform.position, curEnmy._target.position) < 6)
         {
             curEnmy._isAttack = true;
         }
