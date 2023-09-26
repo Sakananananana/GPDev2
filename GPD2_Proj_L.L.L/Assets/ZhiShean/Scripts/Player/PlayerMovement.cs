@@ -44,14 +44,13 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SFX.mute = true;
         oI = GetComponent<ObjectInteraction>();
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         readyToJump = true;
-
-        SFX.mute = true;
     }
 
     // Update is called once per frame

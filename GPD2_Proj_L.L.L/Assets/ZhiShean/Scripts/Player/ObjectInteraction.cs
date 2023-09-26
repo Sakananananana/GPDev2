@@ -231,12 +231,6 @@ public class ObjectInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if(other.CompareTag("EnemyAttack"))
-        //{
-        //    SFX.PlayOneShot(characterSFX[4]);
-
-        //    currentHealth--;
-        //}
 
         if(other.CompareTag("Note 1"))
         {

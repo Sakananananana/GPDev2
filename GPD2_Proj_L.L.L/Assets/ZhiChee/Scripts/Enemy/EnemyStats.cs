@@ -7,6 +7,7 @@ public class EnemyStats : MonoBehaviour
     #region Declaration
     //Script References
     [HideInInspector] public Rigidbody _rbody;
+    [HideInInspector] public ObjectInteraction _objInt;
 
     //Game Object Reference
     [HideInInspector] public Transform _target;
@@ -52,6 +53,7 @@ public class EnemyStats : MonoBehaviour
         if (_targetedOBJ != null)
         {
             _target = _targetedOBJ.transform;
+            _objInt = _targetedOBJ.GetComponent<ObjectInteraction>();
         }
 
         _wanderState = new WanderingState();

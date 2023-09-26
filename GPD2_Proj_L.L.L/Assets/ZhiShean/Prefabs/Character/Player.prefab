@@ -521,7 +521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8521993975372168740}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -575,6 +575,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7792484359515154852}
   - {fileID: 8200647155668290199}
   m_Father: {fileID: 8521993976611628146}
   m_RootOrder: 0
@@ -610,7 +611,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3191
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -642,6 +643,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d8d940964143047b52603d5ced0fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  note1Panel: {fileID: 0}
+  note2Panel: {fileID: 0}
+  note3Panel: {fileID: 0}
+  startingPanel: {fileID: 0}
+  endingPanel: {fileID: 0}
+  horiValue: 0
+  vertiValue: 0
+  oriSens: 0
   sensX: 600
   sensY: 800
   orientation: {fileID: 8521993976697649813}
@@ -738,10 +748,13 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
+  grounded: 0
   orientation: {fileID: 8521993976697649813}
   shootingBullet: {fileID: 5573496385294035033, guid: f409d4a9121b34242abf14376a9a76db, type: 3}
   SFX: {fileID: 520667013}
-  walkingSFX: {fileID: 8300000, guid: a2e27f522480d2f4da7f0d3b02846d28, type: 3}
+  pauseMenu: {fileID: 0}
+  startingPanel: {fileID: 0}
+  endingPanel: {fileID: 0}
 --- !u!114 &8521993976611628144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +780,12 @@ MonoBehaviour:
   gunSFX:
   - {fileID: 8300000, guid: d3e927fdb71ab594ba7ba616df082000, type: 3}
   - {fileID: 8300000, guid: 31fe0914c31e4a04496eb647831ba178, type: 3}
+  pauseMenu: {fileID: 0}
+  note1Panel: {fileID: 0}
+  note2Panel: {fileID: 0}
+  note3Panel: {fileID: 0}
+  startingPanel: {fileID: 0}
+  endingPanel: {fileID: 0}
 --- !u!114 &4692983840571756896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,13 +802,18 @@ MonoBehaviour:
   maxHealth: 10
   HPText: {fileID: 0}
   damage: 1
+  isInfoFound: 0
   infoFound: 0
   info1Found: 0
   info2Found: 0
   info3Found: 0
+  infoObjectiveSound: 0
+  destroyObjectiveSound: 0
+  endObjectiveSound: 0
   spawnDestroyed: 0
   isSpawnDestroy: 0
   isEnded: 0
+  isDead: 0
   hasLighter: 0
   lighterImage: {fileID: 0}
   damageImage: {fileID: 0}
@@ -809,6 +833,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 62d4f25d42cce7f4fbbf1d5fface34f4, type: 3}
   - {fileID: 8300000, guid: d156d5b5b342acd419aa6cef489b752d, type: 3}
   - {fileID: 8300000, guid: 97fda821afb116345b33cc88ee04e604, type: 3}
+  endingPanel: {fileID: 0}
 --- !u!1 &8521993976697649812
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,6 +963,90 @@ Transform:
   m_Father: {fileID: 8521993976611628146}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9090309266194503572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7792484359515154852}
+  - component: {fileID: 5977262708133033662}
+  - component: {fileID: 5811728134429313355}
+  m_Layer: 0
+  m_Name: WeaponCam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7792484359515154852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9090309266194503572}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8521993976293163639}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &5977262708133033662
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9090309266194503572}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!81 &5811728134429313355
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9090309266194503572}
+  m_Enabled: 1
 --- !u!1001 &8521993976969981308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -947,7 +1056,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -989,9 +1098,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3941164549346772188, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -3502047760124054871, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
       propertyPath: m_Name
       value: Gun with Bottle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905997818466785933, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3860080433928750994, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 972c2a8962b3cb8419141f073d3780e5, type: 3}

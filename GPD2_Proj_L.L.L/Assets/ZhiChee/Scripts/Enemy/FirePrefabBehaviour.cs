@@ -36,7 +36,7 @@ public class FirePrefabBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Bullet" && collision.gameObject.tag != "Enemy" && !_isCollided)
+        if (collision.gameObject.tag != "EnemyAttack" && collision.gameObject.tag != "Enemy" && !_isCollided)
         {
             _isCollided = true;
 

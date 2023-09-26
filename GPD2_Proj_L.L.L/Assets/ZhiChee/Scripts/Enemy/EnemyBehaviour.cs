@@ -8,7 +8,7 @@ public class EnemyBehaviour : EnemyStats
     protected override void Awake()
     {
         base.Awake();
-
+        
         _currentHP = 4;
         _rotationSpeed = 35;
         _maxSpeed = 5;
@@ -48,7 +48,7 @@ public class EnemyBehaviour : EnemyStats
     {
         if (collision.collider.CompareTag("Bullet"))
         { 
-            _currentHP--;
+            _currentHP -= _objInt.damage;
         }
     }
 }

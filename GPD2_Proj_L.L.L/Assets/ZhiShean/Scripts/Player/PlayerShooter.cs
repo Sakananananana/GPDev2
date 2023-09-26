@@ -68,6 +68,8 @@ public class PlayerShooter : MonoBehaviour
                 timeToFire = Time.time + 1 / fireRate;
                 ShootProjectile();
             }
+
+            Debug.DrawRay(cam.transform.position, cam.transform.forward);
         }
     }
 
@@ -96,25 +98,20 @@ public class PlayerShooter : MonoBehaviour
 
         currentAmmo--;
 
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        if (Physics.Raycast(firePoint.position, cam.transform.forward, out hit, Mathf.Infinity))
         {
             destination = hit.point;
         }
-        else
-        {
-            destination = ray.GetPoint(1000);
-        }
 
-        InstantiateProjectile(firePoint);
+        InstantiateProjectile();
     }
 
-    void InstantiateProjectile(Transform firepoint)
+    void InstantiateProjectile()
     {
         var projectileObj = Instantiate (projectile, firePoint.position, Quaternion.identity) as GameObject;
-        projectileObj.GetComponent<Rigidbody>().velocity = (destination - firepoint.position).normalized * projectileSpeed;
+        projectileObj.GetComponent<Rigidbody>().velocity = (destination - firePoint.position).normalized * projectileSpeed;
 
         Destroy(projectileObj, 5f);
     }
